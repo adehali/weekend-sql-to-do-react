@@ -1,5 +1,6 @@
 import { useState, useEffect} from 'react';
 import axios from 'axios'; 
+import './App.css';
 
 //import { a } from 'vitest/dist/suite-GoqTeX8s.js';
 
@@ -41,7 +42,7 @@ axios.put ( '/api/todo', objectToSend ).then ( function ( response ) {
       <h1>TO DO APP</h1>
       {
         todoList.map( ( item ) => (
-          <p key ={ item.id}> { item.name} <button onClick={ () => {  
+          <p className = { `complete-${ item.complete }` }key ={ item.id}> { item.name} <button onClick={ () => {  
           toggleMe ( item.id ) }}>Toggle Complete</button></p>
         ))
       }

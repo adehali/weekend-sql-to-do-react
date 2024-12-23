@@ -15,6 +15,16 @@
 
 .App-intro {
   font-size: large;
+} 
+
+.complete-false {
+  background-color: rgb(136, 64, 64);
+color: white;
+}
+
+.complete-true {
+  background-color: rgb(56, 56, 128);
+  color: white;
 }
 
 @keyframes App-logo-spin {
