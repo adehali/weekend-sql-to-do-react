@@ -1,6 +1,8 @@
 import { useState, useEffect} from 'react';
 import axios from 'axios'; 
 
+//import { a } from 'vitest/dist/suite-GoqTeX8s.js';
+
 function App () {
   const [ todoList, setTodoList ] = useState ( [] ); 
 
@@ -21,8 +23,19 @@ function App () {
   }
 function toggleMe ( id ) {
   console.log ( 'intoggleMe:', id); 
+const objectToSend = {
+  id: id
 }
+axios.put ( '/api/todo', objectToSend ).then ( function ( response ) {
+  console.log ( 'back from PUT:', response.data); 
+  fetchTodoList(); 
+}).catch ( function ( err ) {
+  console.log ( err); 
+  alert ('error upbdating todo item'); 
 
+})
+
+}
   return (
     <div>
       <h1>TO DO APP</h1>
