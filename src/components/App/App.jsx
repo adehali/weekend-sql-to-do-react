@@ -6,11 +6,24 @@ import './App.css';
 
 function App () {
   const [ todoList, setTodoList ] = useState ( [] ); 
+  const [ newItemName, setNewItemName ] = useState ( '' );
 
   useEffect (  () => {
-    fetchTodoList()
-
+    fetchTodoList();
   }, [] ); 
+
+  function addItem () {
+    const objectToSend = {
+      name: newItemName
+    }
+    axios.post( '/api/todo', objectToSend ).then( function( response ) {
+      console.log( 'back from POST:', response.data); 
+      fetchTodoList(); 
+    }).catch( function ( err ) {
+      console.log(err); 
+      alert('error adding new item'); 
+    })
+  }
 
   function deleteMe ( id ) {
     console.log ( 'in deleteMe:', id); 
@@ -25,7 +38,7 @@ function App () {
   }
 
   function fetchTodoList(){
-    console.log ( 'in fetchTodoList' ); 
+    console.log( 'in fetchTodoList' ); 
     axios.get( '/api/todo' ).then (function ( response) {
       setTodoList( response.data); 
 
@@ -50,10 +63,13 @@ axios.put ( '/api/todo', objectToSend ).then ( function ( response ) {
 
 }
   return (
+
+    
+      
     <div>
       <h1>TO DO APP</h1>
 
-      
+      <h2>Current List</h2>
       {
         todoList.map( ( item ) => (
           <p className = { `complete-${ item.complete }` }key ={ item.id}> { item.name} 
@@ -62,7 +78,12 @@ axios.put ( '/api/todo', objectToSend ).then ( function ( response ) {
           </p>
         ))
       }
+      <h2>Create New List </h2>
+      <input type='text' placeholder='name' onChange={ ( e )=>{ setNewItemName ( e.target.value)}}/>
+      <button onClick={addItem}>Add Item</button>
+     <p>{ JSON.stringify( newItemName )}</p>
     </div>
+    
   );
 
 }
